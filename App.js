@@ -1,61 +1,27 @@
-import { useState } from 'react'
-import { 
-  View, 
-  Text, 
-  Button, 
-  Image,
-  TouchableOpacity 
-} from 'react-native'
-import nitda from './assets/nitda.png'
+import * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
-const App = () => {
+import LoginScreen from './component/Login';
+import WelcomeScreen from './component/WelcomeScreen';
+import HomeScreen from './component/HomeScreen';
 
-  const [isShow, setIsShow] = useState('')
+export default function App() {
+  
+  const Stack = createStackNavigator();
 
   return (
-    <View style={{
-        flex: 1,
-        backgroundColor: 'green',
-        alignItems: 'center',
-        justifyContent: 'center'
-      }}
-    >
-      <TouchableOpacity
-        onPress={() => setIsShow('I just pressed an image')}
-      >
-        <Image 
-          source={nitda}
-          style={{
-            height: 100
-          }}
-        />
-      </TouchableOpacity>
-
-      <Text style={{
-        color: 'white',
-        fontSize: 40
-        }}
-      >
-        Hello, Nitda
-      </Text>
-      <Button 
-        title='Change Name'
-        onPress={() => setIsShow('I just pressed a button')}
-      />
-
-      {isShow && (
-        <Text
-          style={{
-            color: 'white',
-            fontSize: 30,
-            marginTop: 12
+    <NavigationContainer>
+       <Stack.Navigator
+          initialRouteName="welcome"
+          screenOptions={{
+            headerShown: false, // Hide the header for all screens
           }}
         >
-          {isShow}
-        </Text>
-      )}
-    </View>
-  )
+          <Stack.Screen name="welcome" component={WelcomeScreen} />
+          <Stack.Screen name="login" component={LoginScreen} />
+          <Stack.Screen name="home" component={HomeScreen} />
+        </Stack.Navigator>
+    </NavigationContainer>
+  );
 }
-
-export default App
