@@ -2,6 +2,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import HomeScreen from './components/HomeScreen';
 import WelcomeScreen from './components/WelcomeScreen';
 import LoginScreen from './components/LoginScreen';
+import SignUp from './components/SignUp';
 import { createStackNavigator } from '@react-navigation/stack';
 
 export default function App() {
@@ -19,6 +20,7 @@ export default function App() {
           <Stack.Screen name="welcome" component={WelcomeScreen} />
           <Stack.Screen name="login" component={LoginScreen} />
           <Stack.Screen name="home" component={HomeScreen} />
+          <Stack.Screen name="signup" component={SignUp} />
         </Stack.Navigator>
     </NavigationContainer>
   );

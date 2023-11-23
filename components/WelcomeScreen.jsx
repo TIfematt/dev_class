@@ -16,11 +16,21 @@ const WelcomeScreen = ({ navigation }) => {
         }}
       >
         Welcome to NITDA training Class
-        </Text>
-      <Button 
-        title='Login'
-        onPress={() => navigation.navigate('login')}
-      />
+      </Text>
+      <View style={{
+           marginTop: 22,
+           gap: 12
+        }}
+      >
+        <Button 
+          title='Login'
+          onPress={() => navigation.navigate('login')}
+        />
+        <Button 
+          title='Signup'
+          onPress={() => navigation.navigate('signup')}
+        />
+      </View>
     </View>
   )
 }

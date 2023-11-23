@@ -5,10 +5,21 @@ import {
   TouchableOpacity,
 } from 'react-native'
 import { Input, Button } from '@rneui/themed';
-
 import nitda from '../assets/nitda.png'
+import { useState } from 'react';
 
 const LoginScreen = ({ navigation }) => {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  const onSubmit = () => {
+    if(!email && !password) {
+      return 
+    }
+    if (email == 'tife@gmail.com' && password == '123456'){
+      navigation.navigate('home')
+    }
+  }
   return (
     <View style={{
       flex: 1,
@@ -40,6 +51,7 @@ const LoginScreen = ({ navigation }) => {
             backgroundColor: 'white',
             borderRadius: 10
           }}
+          onChangeText={value => setEmail(value)}
         />
         <Input  
           placeholder='Password'
@@ -51,10 +63,11 @@ const LoginScreen = ({ navigation }) => {
             backgroundColor: 'white',
             borderRadius: 10
           }}
+          onChangeText={value => setPassword(value)}
         />
         <Button 
           title='Login'
-          onPress={() => navigation.navigate('home')}
+          onPress={onSubmit}
 
         />
       </View>
