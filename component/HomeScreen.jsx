@@ -1,10 +1,53 @@
 import { View, Text, TouchableOpacity, Image } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import nitda from '../assets/nitda.png'
 import { Button, Card, Icon } from '@rneui/themed';
 import { ScrollView } from 'react-native';
+import { getAuth, onAuthStateChanged } from "firebase/auth"
+import { getFirestore, collection, query, where, getDocs, getDoc, doc, collectionGroup } from 'firebase/firestore';
+import { db } from '../firebase/firebaseConfig';
+import { useEffect } from 'react';
 
 const HomeScreen = ({ navigation }) => {
+
+  const [userDetails, setUserDetails] = useState({})  
+
+  const auth = getAuth();
+  const firestore = getFirestore();
+
+  useEffect(() => {
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        // User is signed in
+        uid = user.uid;
+        try {
+          const q = query(collectionGroup(db, 'users'), where('id', '==', uid));
+          const querySnapshot = await getDocs(q);
+      
+          if (!querySnapshot.empty) {
+            // Assuming there's only one document with the given UID
+            const userDoc = querySnapshot.docs[0];
+            const userObj = userDoc.data();
+            setUserDetails(userObj)
+            console.log(userDetails)
+            // console.log(userData.firstName)
+          } else {
+            console.error('User document not found in Firestore');
+            // return null;
+          }
+        } catch (error) {
+          console.error('Error fetching user document from Firestore:', error);
+          // return null;
+        }
+      } else {
+        console.log('New user')
+      }
+    });
+  }, [])
+
+ 
+
+
   const studentCard = ({ name, occupation, phoneNumber, gender }) => {
     return (
       <View>
@@ -12,7 +55,7 @@ const HomeScreen = ({ navigation }) => {
           <Card.Title 
             style={{ fontSize: 24, fontWeight: 'bold'  }}
           >
-            {name}
+            {userDetails.fullName}
           </Card.Title>
           <Card.Divider />
           <Card.Image
@@ -23,13 +66,13 @@ const HomeScreen = ({ navigation }) => {
             }}
           />
           <Text style={{ marginBottom: 10, fontSize: 20, fontWeight: 'bold' }}>
-            Occupation: {occupation}
+            Occupation: {userDetails.occupation}
           </Text>
           <Text style={{ marginBottom: 10, fontSize: 20, fontWeight: 'bold'  }}>
-           Phone Number: {phoneNumber}
+           Phone Number: {userDetails.phoneNumber}
           </Text>
           <Text style={{ marginBottom: 10, fontSize: 20, fontWeight: 'bold'  }}>
-            Gender: {gender}
+            Gender: {userDetails.gender}
           </Text>
           <Button
             icon={
