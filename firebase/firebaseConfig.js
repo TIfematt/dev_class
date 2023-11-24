@@ -5,13 +5,13 @@ import { getFirestore } from "firebase/firestore";
 // import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
 
 const firebaseConfig = {
-  apiKey: '',
-  authDomain: '',
+  apiKey: 'AIzaSyDSPd1VEhV0EDFwzc4M9EB-BBWCKtL4jqU',
+  authDomain: 'goryda-drivers.firebaseapp.com',
   // databaseURL: 'https://your-database-name.firebaseio.com',
-  projectId: '',
-  storageBucket: '',
+  projectId: 'goryda-drivers',
+  storageBucket: 'goryda-drivers.appspot.com',
   // messagingSenderId: '12345-insert-yourse',
-  appId: '',
+  appId: '1:180147141026:android:fddb77b0ce2a4063531afb',
 };
 
 // Initialize Firebase
