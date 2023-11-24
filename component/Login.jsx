@@ -10,10 +10,30 @@ import {
 } from 'react-native'
 import { Input, Button } from '@rneui/themed';
 import nitda from '../assets/nitda.png'
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 const LoginScreen = ({ navigation }) => {
 
-  const [isShow, setIsShow] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  const onSubmit = () => {
+    if(!email && !password) return
+    const auth = getAuth();
+    signInWithEmailAndPassword(auth, email, password)
+    .then( async (userCredential) => {
+      // Signed in 
+      const user = userCredential.user;
+
+      // setUser(user)
+      navigation.navigate('home') // , {user}
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage)
+    });
+  }
 
   return (
     <KeyboardAvoidingView style={{
@@ -51,6 +71,7 @@ const LoginScreen = ({ navigation }) => {
                 borderRadius: 10,
                 paddingLeft: 12,
               }}
+              onChangeText={value => setEmail(value)}
             />
             <Input 
               placeholder='Password'
@@ -64,24 +85,14 @@ const LoginScreen = ({ navigation }) => {
                 borderRadius: 10,
                 paddingLeft: 12,
               }}
+              onChangeText={value => setPassword(value)}
             />
             <Button 
               title= 'Login'
-              
-              onPress={() => navigation.navigate('home')}
+              onPress={onSubmit}
             />
           </View>
-          {isShow && (
-            <Text
-              style={{
-                color: 'white',
-                fontSize: 30,
-                marginTop: 12
-              }}
-            >
-              {isShow}
-            </Text>
-          )}
+          
         </View>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>

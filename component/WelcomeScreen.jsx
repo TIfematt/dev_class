@@ -16,6 +16,10 @@ const WelcomeScreen = ({ navigation }) => {
           title='Login'
           onPress={() => navigation.navigate('login')}
         />
+        <Button
+          title='Signup'
+          onPress={() => navigation.navigate('signup')}
+        />
       </View>
     </SafeAreaView>
   )
